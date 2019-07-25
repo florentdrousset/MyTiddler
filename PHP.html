@@ -189,9 +189,23 @@ Error message and password prompt
 
 <li>constructeur</li>
 
+<li>Dependency inversion principle</li>
+
+<li>Interface segregation principle</li>
+
+<li>Liskov substitute principle</li>
+
 <li>log</li>
 
 <li>méthodes</li>
+
+<li>méthodes magiques</li>
+
+<li>open-closed</li>
+
+<li>Single responsibility principle</li>
+
+<li>SOLID</li>
 
 <li>surcharge</li>
 
@@ -9128,7 +9142,7 @@ Error message and password prompt
 <div created="20190222204244792" modified="20190222221437967" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Tools</pre>
 </div>
-<div list="log" title="$:/StoryList">
+<div created="20190725091131226" list="log [[méthodes magiques]]" modified="20190725100109948" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9144,7 +9158,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///Users/florentdrousset/MyTiddler/PHP.html&quot;
+            &quot;text&quot;: &quot;file:///Users/etudiant/Documents/tiddler_notes-master/PHP.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -9164,7 +9178,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/Users/florentdrousset/MyTiddler/PHP.html&quot;
+            &quot;text&quot;: &quot;/Users/etudiant/Documents/tiddler_notes-master/PHP.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -9176,11 +9190,11 @@ Error message and password prompt
         },
         &quot;$:/info/browser/screen/width&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/width&quot;,
-            &quot;text&quot;: &quot;1280&quot;
+            &quot;text&quot;: &quot;1920&quot;
         },
         &quot;$:/info/browser/screen/height&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/height&quot;,
-            &quot;text&quot;: &quot;800&quot;
+            &quot;text&quot;: &quot;1080&quot;
         }
     }
 }</pre>
@@ -9348,24 +9362,50 @@ Voir aussi :
 <div created="20190722094015216" modified="20190722094039935" title="constructeur">
 <pre>Permet d'initialiser l'[[objet|objet]] avec des propriétés par défaut.</pre>
 </div>
-<div created="20190222204451197" modified="20190724194020384" tags="log" title="log" type="">
+<div created="20190725091618000" modified="20190725091619115" title="Dependency inversion principle">
+<pre>
+# High-level modules should not depend on low-level modules. Both should depend on abstractions.
+# Abstractions should not depend on details. Details should depend on abstractions.</pre>
+</div>
+<div created="20190725091338315" modified="20190725091339470" title="Interface segregation principle">
+<pre>In programming, the interface segregation principle states that no client should be forced to depend on methods it does not use.
+Put more simply: Do not add additional functionality to an existing interface by adding new methods.
+Instead, create a new interface and let your class implement multiple interfaces if needed.
+Mieux vaut implémenter plusieurs interfaces plutôt que de se retrouver avec des classes ayant des méthodes qui ne leur servent à rien.</pre>
+</div>
+<div created="20190725091301418" modified="20190725091302420" title="Liskov substitute principle">
+<pre>Relation parent/enfant.
+L'enfant doit pouvoir accéder aux props et méthodes du parent (avec ou sans surcharge)</pre>
+</div>
+<div created="20190222204451197" modified="20190725100107820" tags="log" title="log" type="">
 <pre>! log PHP
 
 !! Mercredi 24 Juillet
 
 ''SOLID''
+[[Lien intéressant|https://itnext.io/solid-principles-explanation-and-examples-715b975dcad4]]
 
-SOLID est un acronyme résumant 5 principes important de la POO.
-* ''S'' - Single responsibility principle
-Le principe de responsabilité unique dit qu'une classe doit avoir une seule et unique raison de changer.
+[[SOLID|SOLID]] est un acronyme résumant 5 principes important de la POO.
 
-Concrètement cela signifie que chaque classe doit se concentrer sur une seule tâche à la fois.
+* ''S'' - [[Single responsibility principle|Single responsibility principle]]
+
+* ''O'' - [[Open / closed|open-closed]]
+
+* ''L'' - [[Liskov substitute principle|Liskov substitute principle]]
+
+
+* ''I'' - [[Interface segregation principle|Interface segregation principle]]
+
+
+* ''D'' - [[Dependency inversion principle|Dependency inversion principle]]
 
 
 
-''Les méthodes magiques''
+[[Les méthodes magiques|méthodes magiques]]
 
 Les méthodes magiques sont des méthodes appelées par un évènement particulier. Exemple : ''\__construct'' ou ''\__destruct'', appelés respectivement pendant la création ou la suppression d'une instance.
+
+[[Cours OC sur les méthodes magiques|https://openclassrooms.com/fr/courses/1665806-programmez-en-oriente-objet-en-php/1666950-les-methodes-magiques]]
 
 !! Mardi 23 Juillet 2019
 
@@ -9537,6 +9577,37 @@ monObjet-&gt;maMéthode();
 
 ```
 
+</pre>
+</div>
+<div created="20190725100112913" modified="20190725100115332" title="méthodes magiques">
+<pre>Les méthodes magiques sont des méthodes appelées par un évènement particulier. Exemple : ''\__construct'' ou ''\__destruct'', appelés respectivement pendant la création ou la suppression d'une instance.
+
+[[Cours OC sur les méthodes magiques|https://openclassrooms.com/fr/courses/1665806-programmez-en-oriente-objet-en-php/1666950-les-methodes-magiques]]</pre>
+</div>
+<div created="20190725091224402" modified="20190725091225620" title="open-closed">
+<pre>La classe peut continuer à être améliorée, mais elle est fermée car elle est dépendante d'autres classes.</pre>
+</div>
+<div created="20190725091134695" modified="20190725091135602" title="Single responsibility principle">
+<pre>Le principe de responsabilité unique dit qu'une classe doit avoir une seule et unique raison de changer.
+
+Concrètement cela signifie que chaque classe doit se concentrer sur une seule tâche à la fois.</pre>
+</div>
+<div created="20190725095842821" modified="20190725095912944" title="SOLID">
+<pre>[[Lien intéressant|https://itnext.io/solid-principles-explanation-and-examples-715b975dcad4]]
+
+SOLID est un acronyme résumant 5 principes important de la POO.
+
+* ''S'' - [[Single responsibility principle|Single responsibility principle]]
+
+* ''O'' - [[Open / closed|open-closed]]
+
+* ''L'' - [[Liskov substitute principle|Liskov substitute principle]]
+
+
+* ''I'' - [[Interface segregation principle|Interface segregation principle]]
+
+
+* ''D'' - [[Dependency inversion principle|Dependency inversion principle]]
 </pre>
 </div>
 <div created="20190722151013327" modified="20190722151057375" title="surcharge">
