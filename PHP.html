@@ -9144,7 +9144,7 @@ Error message and password prompt
 <div created="20190222204244792" modified="20190222221437967" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Tools</pre>
 </div>
-<div created="20190726101604728" list="log [[Design patterns]] Observer" modified="20190726101722795" title="$:/StoryList">
+<div created="20190729081614342" list="log [[Design patterns]]" modified="20190729081614342" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9160,7 +9160,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///Users/florentdrousset/MyTiddler/PHP.html&quot;
+            &quot;text&quot;: &quot;file:///Users/etudiant/Documents/tiddler_notes-master/PHP.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -9180,7 +9180,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/Users/florentdrousset/MyTiddler/PHP.html&quot;
+            &quot;text&quot;: &quot;/Users/etudiant/Documents/tiddler_notes-master/PHP.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -9192,11 +9192,11 @@ Error message and password prompt
         },
         &quot;$:/info/browser/screen/width&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/width&quot;,
-            &quot;text&quot;: &quot;1280&quot;
+            &quot;text&quot;: &quot;1920&quot;
         },
         &quot;$:/info/browser/screen/height&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/height&quot;,
-            &quot;text&quot;: &quot;800&quot;
+            &quot;text&quot;: &quot;1080&quot;
         }
     }
 }</pre>
@@ -9373,12 +9373,66 @@ Voir aussi :
  
 Le but global de ce principe est de découpler le plus possible les classes les unes des autres afin que chaque pièce puisse être remplaçable facilement.</pre>
 </div>
-<div created="20190726101714247" modified="20190728190812636" title="Design patterns">
+<div created="20190726101714247" modified="20190729103533969" title="Design patterns">
 <pre>[[Observer|Observer]]
 
-Concept de published / subscriber.
+Concept de publisher / subscriber.
 
-Fear not! Everything isn’t as complicated as it sounds. In reality, this mechanism consists of 1) an array field for storing a list of references to subscriber objects and 2) several public methods which allow adding subscribers to and removing them from that list.</pre>
+Fear not! Everything isn’t as complicated as it sounds. In reality, this mechanism consists of 1) an array field for storing a list of references to subscriber objects and 2) several public methods which allow adding subscribers to and removing them from that list.
+
+Usage examples: PHP has several built-in interfaces (SplSubject, SplObserver) that can be used to make your implementations of the Observer pattern compatible with the rest of the PHP code.
+
+Ressources :
+[[refactoring.guru|https://refactoring.guru/design-patterns/observer]]
+[[grafikart|https://www.grafikart.fr/tutoriels/event-listener-881]]
+
+[[Decorator]]
+
+Problème :
+Imaginons que l'on propose des gaufres ou muffin avec différents toppings : chantilly, chocolat, m&amp;ms. Si on essaye de résoudre ce problème avec l'héritage, on va se retrouver avec énormément de classes :
+
+* MuffinChantilly
+* MuffinChantilly
+* MuffinChantillyChocolat
+* MuffinChantillyM&amp;ms
+* MuffinChocolatM&amp;ms
+* MuffinChocolatM&amp;ms
+* MuffinChantillyChocolatM&amp;ms...
+
+Le décorateur est là pour régler ce problème.
+
+Muffin sera encadré par Chantilly. 
+withChantilly(Muffin)
+ou
+withChoco(withChantilly(Muffin))
+
+
+[[Singleton]]
+
+On utilise le design pattern singleton lorsque l'on veut qu'une classe ne puisse être instanciée qu'une seule fois. Exemple de code minimum de singleton :
+
+```php
+
+class MonSingleton
+{
+  protected static $instance; // Contiendra l'instance de notre classe.
+  
+  protected function __construct() { } // Constructeur en privé.
+  protected function __clone() { } // Méthode de clonage en privé aussi.
+  
+  public static function getInstance()
+  {
+    if (!isset(self::$instance)) // Si on n'a pas encore instancié notre classe.
+    {
+      self::$instance = new self; // On s'instancie nous-mêmes. :)
+    }
+    
+    return self::$instance;
+  }
+}
+
+```
+</pre>
 </div>
 <div created="20190725091338315" modified="20190725091339470" title="Interface segregation principle">
 <pre>In programming, the interface segregation principle states that no client should be forced to depend on methods it does not use.
@@ -9390,12 +9444,19 @@ Mieux vaut implémenter plusieurs interfaces plutôt que de se retrouver avec de
 <pre>Relation parent/enfant.
 L'enfant doit pouvoir accéder aux props et méthodes du parent (avec ou sans surcharge)</pre>
 </div>
-<div created="20190222204451197" modified="20190726101602526" tags="log" title="log" type="">
+<div created="20190222204451197" modified="20190729103622698" tags="log" title="log" type="">
 <pre>! log PHP
+
+!! Lundi 29 Juillet
+
+On continue sur les [[Design patterns|Design patterns]], et notamment le [[Singleton]].
 
 !! Vendredi 26 Juillet
 
 [[Design patterns|Design patterns]]
+
+[[Observer]]
+[[Décorateur]]
 
 !! Jeudi 25 Juillet
 
