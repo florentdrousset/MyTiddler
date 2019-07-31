@@ -9394,13 +9394,13 @@ Error message and password prompt
 <div created="20190730111834249" modified="20190730111835720" title="$:/state/tab--1963855381">
 <pre>$:/core/ui/ControlPanel/Palette</pre>
 </div>
-<div created="20190224122313283" modified="20190730111838723" title="$:/state/tab-1749438307">
-<pre>$:/core/ui/ControlPanel/Info</pre>
+<div created="20190224122313283" modified="20190731092302858" title="$:/state/tab-1749438307">
+<pre>$:/core/ui/ControlPanel/Plugins</pre>
 </div>
 <div created="20190222204244792" modified="20190730111820922" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Tools</pre>
 </div>
-<div created="20190730111756649" list="log" modified="20190730115034324" title="$:/StoryList">
+<div created="20190731092300995" list="log" modified="20190731092342444" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20190224122757742" modified="20190224122808808" title="$:/tags/Stylesheet">
@@ -9505,7 +9505,7 @@ highlight.js/src/styles/atelier-dune-light.css
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///Users/florentdrousset/MyTiddler/NoSQL.html&quot;
+            &quot;text&quot;: &quot;file:///Users/etudiant/Documents/tiddler_notes-master/NoSQL.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -9525,7 +9525,7 @@ highlight.js/src/styles/atelier-dune-light.css
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/Users/florentdrousset/MyTiddler/NoSQL.html&quot;
+            &quot;text&quot;: &quot;/Users/etudiant/Documents/tiddler_notes-master/NoSQL.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -9537,11 +9537,11 @@ highlight.js/src/styles/atelier-dune-light.css
         },
         &quot;$:/info/browser/screen/width&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/width&quot;,
-            &quot;text&quot;: &quot;1280&quot;
+            &quot;text&quot;: &quot;1920&quot;
         },
         &quot;$:/info/browser/screen/height&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/height&quot;,
-            &quot;text&quot;: &quot;800&quot;
+            &quot;text&quot;: &quot;1080&quot;
         }
     }
 }</pre>
@@ -10345,8 +10345,199 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20190522192330936" draft.of="New Tiddler" draft.title="" modified="20190522192333262" tags="" title="Draft of 'New Tiddler'">
 <pre></pre>
 </div>
-<div created="20190730111909577" modified="20190730181525505" title="log">
-<pre>!! Mardi 30 Juillet 2019
+<div created="20190730111909577" modified="20190731093127003" title="log">
+<pre>!! Mercredi 31 Juillet 2019
+
+
+[[Redis]]
+
+
+[[Tutoriel Try Redis|Tutoriel Try Redis]]
+
+http://try.redis.io/
+
+Redis is what is called a key-value store, often referred to as a NoSQL database. The essence of a key-value store is the ability to store some data, called a value, inside a key. This data can later be retrieved only if we know the exact key used to store it. We can use the command SET to store the value &quot;fido&quot; at key &quot;server:name&quot;:
+
+```redis
+    SET server:name &quot;fido&quot;
+```
+
+Redis will store our data permanently, so we can later ask &quot;What is the value stored at key server:name?&quot; and Redis will reply with &quot;fido&quot;:
+
+```
+    GET server:name =&gt; &quot;fido&quot;
+```
+
+Other common operations provided by key-value stores are DEL to delete a given key and associated value, SET-if-not-exists (called SETNX on Redis) that sets a key only if it does not already exist, and INCR to atomically increment a number stored at a given key:
+
+```
+    SET connections 10
+    INCR connections =&gt; 11
+    INCR connections =&gt; 12
+    DEL connections
+    INCR connections =&gt; 1
+```
+
+Redis can be told that a key should only exist for a certain length of time. This is accomplished with the EXPIRE and TTL commands.
+
+```
+    SET resource:lock &quot;Redis Demo&quot;
+    EXPIRE resource:lock 120
+```
+
+This causes the key resource:lock to be deleted in 120 seconds. You can test how long a key will exist with the TTL command. It returns the number of seconds until it will be deleted.
+
+```
+    TTL resource:lock =&gt; 113
+    // after 113s
+    TTL resource:lock =&gt; -2
+```
+
+The -2 for the TTL of the key means that the key does not exist (anymore). A -1 for the TTL of the key means that it will never expire. Note that if you SET a key, its TTL will be reset.
+
+```
+    SET resource:lock &quot;Redis Demo 1&quot;
+    EXPIRE resource:lock 120
+    TTL resource:lock =&gt; 119
+    SET resource:lock &quot;Redis Demo 2&quot;
+    TTL resource:lock =&gt; -1
+```
+
+Redis also supports several more complex data structures. The first one we'll look at is a list. A list is a series of ordered values. Some of the important commands for interacting with lists are RPUSH, LPUSH, LLEN, LRANGE, LPOP, and RPOP. You can immediately begin working with a key as a list, as long as it doesn't already exist as a different type.
+
+RPUSH puts the new value at the end of the list.
+
+```
+    RPUSH friends &quot;Alice&quot;
+    RPUSH friends &quot;Bob&quot;
+```
+
+LPUSH puts the new value at the start of the list.
+
+```
+    LPUSH friends &quot;Sam&quot;
+```
+
+LRANGE gives a subset of the list. It takes the index of the first element you want to retrieve as its first parameter and the index of the last element you want to retrieve as its second parameter. A value of -1 for the second parameter means to retrieve elements until the end of the list.
+
+```
+    LRANGE friends 0 -1 =&gt; 1) &quot;Sam&quot;, 2) &quot;Alice&quot;, 3) &quot;Bob&quot;
+    LRANGE friends 0 1 =&gt; 1) &quot;Sam&quot;, 2) &quot;Alice&quot;
+    LRANGE friends 1 2 =&gt; 1) &quot;Alice&quot;, 2) &quot;Bob&quot;
+```
+
+LLEN returns the current length of the list.
+
+```
+    LLEN friends =&gt; 3
+```
+
+LPOP removes the first element from the list and returns it.
+
+```
+    LPOP friends =&gt; &quot;Sam&quot;
+```
+
+RPOP removes the last element from the list and returns it.
+
+```
+    RPOP friends =&gt; &quot;Bob&quot;
+```
+
+Note that the list now only has one element:
+
+```
+    LLEN friends =&gt; 1
+    LRANGE friends 0 -1 =&gt; 1) &quot;Alice&quot;
+```
+
+The next data structure that we'll look at is a set. A set is similar to a list, except it does not have a specific order and each element may only appear once. Some of the important commands in working with sets are SADD, SREM, SISMEMBER, SMEMBERS and SUNION.
+
+SADD adds the given value to the set.
+
+```
+    SADD superpowers &quot;flight&quot;
+    SADD superpowers &quot;x-ray vision&quot;
+    SADD superpowers &quot;reflexes&quot;
+```
+
+SREM removes the given value from the set.
+
+```
+    SREM superpowers &quot;reflexes&quot;
+```
+
+SISMEMBER tests if the given value is in the set. It returns 1 if the value is there and 0 if it is not.
+
+```
+    SISMEMBER superpowers &quot;flight&quot; =&gt; 1
+    SISMEMBER superpowers &quot;reflexes&quot; =&gt; 0
+```
+
+SMEMBERS returns a list of all the members of this set.
+
+```
+    SMEMBERS superpowers =&gt; 1) &quot;flight&quot;, 2) &quot;x-ray vision&quot;
+```
+
+SUNION combines two or more sets and returns the list of all elements.
+
+```
+    SADD birdpowers &quot;pecking&quot;
+    SADD birdpowers &quot;flight&quot;
+    SUNION superpowers birdpowers =&gt; 1) &quot;pecking&quot;, 2) &quot;x-ray vision&quot;, 3) &quot;flight&quot;
+```
+
+Sets are a very handy data type, but as they are unsorted they don't work well for a number of problems. This is why Redis 1.2 introduced Sorted Sets.
+
+A sorted set is similar to a regular set, but now each value has an associated score. This score is used to sort the elements in the set.
+
+```
+    ZADD hackers 1940 &quot;Alan Kay&quot;
+    ZADD hackers 1906 &quot;Grace Hopper&quot;
+    ZADD hackers 1953 &quot;Richard Stallman&quot;
+    ZADD hackers 1965 &quot;Yukihiro Matsumoto&quot;
+    ZADD hackers 1916 &quot;Claude Shannon&quot;
+    ZADD hackers 1969 &quot;Linus Torvalds&quot;
+    ZADD hackers 1957 &quot;Sophie Wilson&quot;
+    ZADD hackers 1912 &quot;Alan Turing&quot;
+```
+
+In these examples, the scores are years of birth and the values are the names of famous hackers.
+
+```
+    ZRANGE hackers 2 4 =&gt; 1) &quot;Claude Shannon&quot;, 2) &quot;Alan Kay&quot;, 3) &quot;Richard Stallman&quot;
+```
+
+Simple strings, sets and sorted sets already get a lot done but there is one more data type Redis can handle: Hashes.
+
+Hashes are maps between string fields and string values, so they are the perfect data type to represent objects (eg: A User with a number of fields like name, surname, age, and so forth):
+
+```
+    HSET user:1000 name &quot;John Smith&quot;
+    HSET user:1000 email &quot;john.smith@example.com&quot;
+    HSET user:1000 password &quot;s3cret&quot;
+```
+
+To get back the saved data use HGETALL:
+
+```
+    HGETALL user:1000
+```
+
+You can also set multiple fields at once:
+
+```sql
+    HMSET user:1001 name &quot;Mary Jones&quot; password &quot;hidden&quot; email &quot;mjones@example.com&quot;
+```
+
+If you only need a single field value that is possible as well:
+
+```
+    HGET user:1001 name =&gt; &quot;Mary Jones&quot;
+```
+
+!! Mardi 30 Juillet 2019
 
 [[Comparaisons MongoDB/SQL|https://docs.mongodb.com/manual/reference/sql-comparison/]]
 
