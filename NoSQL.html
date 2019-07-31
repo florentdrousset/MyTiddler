@@ -383,6 +383,8 @@ Error message and password prompt
 
 <li>Draft of 'New Tiddler'</li>
 
+<li>Installation Redis</li>
+
 <li>log</li>
 
 </ul>
@@ -9400,7 +9402,7 @@ Error message and password prompt
 <div created="20190222204244792" modified="20190730111820922" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Tools</pre>
 </div>
-<div created="20190731092300995" list="log" modified="20190731092342444" title="$:/StoryList">
+<div created="20190731092300995" list="log [[Installation Redis]]" modified="20190731094616160" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20190224122757742" modified="20190224122808808" title="$:/tags/Stylesheet">
@@ -10345,11 +10347,51 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20190522192330936" draft.of="New Tiddler" draft.title="" modified="20190522192333262" tags="" title="Draft of 'New Tiddler'">
 <pre></pre>
 </div>
-<div created="20190730111909577" modified="20190731093127003" title="log">
+<div created="20190731094619223" modified="20190731094620528" title="Installation Redis">
+<pre>Download, extract and compile Redis with:
+
+```
+$ wget http://download.redis.io/releases/redis-5.0.5.tar.gz
+$ tar xzf redis-5.0.5.tar.gz
+$ cd redis-5.0.5
+$ make
+```
+The binaries that are now compiled are available in the src directory. Run Redis with:
+
+```
+$ src/redis-server
+```
+
+You can interact with Redis using the built-in client:
+
+```
+$ src/redis-cli
+redis&gt; set foo bar
+OK
+redis&gt; get foo
+&quot;bar&quot;
+```</pre>
+</div>
+<div created="20190730111909577" modified="20190731102529818" title="log">
 <pre>!! Mercredi 31 Juillet 2019
 
 
 [[Redis]]
+
+[[Predis]]
+
+https://github.com/nrk/predis
+
+Predis est une sorte de PDO pour Redis, et permet donc de manipuler Redis grâce à PHP.
+Installation via composer :
+
+```shell
+php composer.phar require predis/predis
+```
+
+Et voici un [[tutoriel predis|https://www.sitepoint.com/an-introduction-to-redis-in-php-using-predis/]]
+
+[[Installation Reddis|Installation Redis]]
 
 
 [[Tutoriel Try Redis|Tutoriel Try Redis]]
@@ -10527,7 +10569,7 @@ To get back the saved data use HGETALL:
 
 You can also set multiple fields at once:
 
-```sql
+```
     HMSET user:1001 name &quot;Mary Jones&quot; password &quot;hidden&quot; email &quot;mjones@example.com&quot;
 ```
 
@@ -10536,6 +10578,18 @@ If you only need a single field value that is possible as well:
 ```
     HGET user:1001 name =&gt; &quot;Mary Jones&quot;
 ```
+
+Numerical values in hash fields are handled exactly the same as in simple strings and there are operations to increment this value in an atomic way.
+
+```
+    HSET user:1000 visits 10
+    HINCRBY user:1000 visits 1 =&gt; 11
+    HINCRBY user:1000 visits 10 =&gt; 21
+    HDEL user:1000 visits
+    HINCRBY user:1000 visits 1 =&gt; 1
+```
+
+Check the [[full list of Hash commands|https://redis.io/commands#hash]] for more information.
 
 !! Mardi 30 Juillet 2019
 
