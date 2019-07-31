@@ -10372,9 +10372,48 @@ redis&gt; get foo
 &quot;bar&quot;
 ```</pre>
 </div>
-<div created="20190730111909577" modified="20190731102529818" title="log">
+<div created="20190730111909577" modified="20190731120535271" title="log">
 <pre>!! Mercredi 31 Juillet 2019
 
+Quelques petits tests sur predis :
+
+```php
+
+&lt;?php
+  $client = new Predis\Client();
+  $client-&gt;set('age', 31);
+  $value = $client-&gt;incr('age');
+  echo $value;
+
+  $list = &quot;fruits&quot;;
+  $client-&gt;rpush($list, &quot;Pomme&quot;);
+  $client-&gt;rpush($list, &quot;Banane&quot;);
+  $client-&gt;lpush($list, &quot;Kiwi&quot;);
+  $result = $client-&gt;lrange($list, 0, -1);
+
+  foreach($result as $element) {
+      echo '&lt;br&gt;'.$element.'&lt;/br&gt;';
+  }
+
+  echo &quot;Cette liste est longue de &quot;. $client-&gt;llen($list).&quot; elements.&quot;;
+
+  $client-&gt;set(&quot;1semaine&quot;, &quot;j'expire dans une semaine !&quot;);
+  $client-&gt;expireat(&quot;1semaine&quot;, strtotime(&quot;+1 week&quot;));
+  $ttl = $client-&gt;ttl(&quot;1 semaine&quot;);
+  echo $ttl;
+
+  $client-&gt;zadd(&quot;hackers&quot;, 1940, 'Alan Kay');
+  $client-&gt;zadd(&quot;hackers&quot;, 1906, &quot;Grace Hopper&quot;);
+  $client-&gt;zadd(&quot;hackers&quot;, 1953, &quot;Richard Stallman&quot;);
+  $result2 = $client-&gt;zrange(&quot;hackers&quot;, 0, -1);
+
+  foreach ($result2 as $element) {
+      echo '&lt;br&gt;'. $element . '&lt;/br&gt;';
+  }
+
+  ?&gt;
+
+```
 
 [[Redis]]
 
@@ -10637,6 +10676,8 @@ Dans MongoDB, une collection est l'équivalent d'une table en MySQL.
 
 Importation de db en ligne de commande :
 ` mongoimport --db new_york --collection restaurants ~/RESTAURANT/restaurants.json `
+
+http://blog.masamune.fr/support-mongodb/
 
 </pre>
 </div>
