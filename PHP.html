@@ -221,6 +221,8 @@ Error message and password prompt
 
 <li>test</li>
 
+<li>tests unitaires</li>
+
 </ul>
 </p>
 
@@ -9152,7 +9154,7 @@ Error message and password prompt
 <div created="20190222204244792" modified="20190222221437967" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Tools</pre>
 </div>
-<div created="20190729081614342" list="log" modified="20190729122433607" title="$:/StoryList">
+<div created="20190802145459521" list="log [[tests unitaires]]" modified="20190802145459521" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9427,8 +9429,14 @@ Mieux vaut implémenter plusieurs interfaces plutôt que de se retrouver avec de
 <pre>Relation parent/enfant.
 L'enfant doit pouvoir accéder aux props et méthodes du parent (avec ou sans surcharge)</pre>
 </div>
-<div created="20190222204451197" modified="20190729131017530" tags="log" title="log" type="">
+<div created="20190222204451197" modified="20190802145457576" tags="log" title="log" type="">
 <pre>! log PHP
+
+!! Vendredi 2 Août
+
+Tuto des [[tests unitaires de Grafikart|https://www.grafikart.fr/tutoriels/phpunit-test-unit-308]]
+
+[[tests unitaires|tests unitaires]]
 
 !! Lundi 29 Juillet
 
@@ -9770,8 +9778,7 @@ monObjet-&gt;maMéthode();
 [[Cours OC sur les méthodes magiques|https://openclassrooms.com/fr/courses/1665806-programmez-en-oriente-objet-en-php/1666950-les-methodes-magiques]]</pre>
 </div>
 <div created="20190729122436990" modified="20190729122438071" title="Observer">
-<pre>
-Concept de publisher / subscriber.
+<pre>Concept de publisher / subscriber.
 
 Fear not! Everything isn’t as complicated as it sounds. In reality, this mechanism consists of 1) an array field for storing a list of references to subscriber objects and 2) several public methods which allow adding subscribers to and removing them from that list.
 
@@ -9791,8 +9798,7 @@ Ressources :
 Concrètement cela signifie que chaque classe doit se concentrer sur une seule tâche à la fois.</pre>
 </div>
 <div created="20190729122504638" modified="20190729122507080" title="Singleton">
-<pre>
-On utilise le design pattern singleton lorsque l'on veut qu'une classe ne puisse être instanciée qu'une seule fois. Exemple de code minimum de singleton :
+<pre>On utilise le design pattern singleton lorsque l'on veut qu'une classe ne puisse être instanciée qu'une seule fois. Exemple de code minimum de singleton :
 
 ```php
 
@@ -9839,6 +9845,49 @@ SOLID est un acronyme résumant 5 principes important de la POO.
 </div>
 <div created="20190222204210947" modified="20190222204216925" tags="" title="test">
 <pre>coucou</pre>
+</div>
+<div created="20190802145504801" modified="20190802151706004" title="tests unitaires">
+<pre>Il faut commencer par installer phpunit à l'aide de [[composer]].
+
+```
+composer --dev require phpunit/phpunit
+```
+
+Il faut ensuite créer un dossier pour les classes et un dossier pour les tests. Pour lancer un test sur une classe, on utilise `vendor/bin/phpunit dossier-test/` dans la console. Exemple d'une classe de test :
+
+```PHP
+
+class MathTest extends PHPUnit\Framework\TestCase
+{
+    public function testDouble() {
+        $this-&gt;assertEquals(5, \Grafikart\Math::double(2));
+    }
+
+    public function testDoubleIfZero() {
+        $this-&gt;assertEquals(0, \Grafikart\Math::double(0));
+    }
+}
+
+```
+
+On peut aussi configurer phpunit à l'aide d'un fichier XML nommé phpunit.xml à la racine du projet. Exemple :
+
+```xml
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+
+&lt;phpunit colors=&quot;true&quot;&gt;
+    &lt;testsuite name=&quot;mes super tests&quot;&gt;
+            &lt;directory&gt;./tests&lt;/directory&gt;
+    &lt;/testsuite&gt;
+&lt;/phpunit&gt;
+
+```
+
+Le fichier ci-dessus permet d'afficher les couleurs pour les tests unitaires et définit un dossier par défaut. On peut ainsi lancer nos tests unitaires avec un simple `vendor/bin/phpunit`
+
+Concept de TDD : &quot;Test Driven Development&quot; : plutôt de créer une classe et de la tester, on va d'abord écrire les tests puis écrire notre classe.
+</pre>
 </div>
 
 </div>
